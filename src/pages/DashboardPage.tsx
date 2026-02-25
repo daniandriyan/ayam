@@ -7,6 +7,8 @@ import {
   TrendingUp,
   DollarSign,
   AlertCircle,
+  Utensils,
+  HeartPulse,
 } from 'lucide-react'
 import {
   LineChart,
