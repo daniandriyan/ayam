@@ -283,7 +283,7 @@ export default function ReportsPage() {
                   fill="#8884d8"
                   dataKey="value"
                 >
-                  {reportData.salesByGrade.map((entry, index) => (
+                  {reportData.salesByGrade.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
