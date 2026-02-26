@@ -6,6 +6,10 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
+export type Tables<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Row']
+export type InsertTables<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Insert']
+export type Enums<T extends keyof Database['public']['Enums']> = Database['public']['Enums'][T]
+
 export interface Database {
   public: {
     Tables: {
@@ -19,7 +23,7 @@ export interface Database {
           updated_at: string
         }
         Insert: {
-          id: string
+          id?: string
           email: string
           farm_name?: string | null
           location?: string | null
@@ -34,6 +38,7 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: []
       }
       coops: {
         Row: {
@@ -60,6 +65,14 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "coops_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       chickens: {
         Row: {
@@ -98,6 +111,14 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "chickens_coop_id_fkey"
+            columns: ["coop_id"]
+            referencedRelation: "coops"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       egg_production: {
         Row: {
@@ -130,6 +151,14 @@ export interface Database {
           notes?: string | null
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "egg_production_chicken_id_fkey"
+            columns: ["chicken_id"]
+            referencedRelation: "chickens"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       feed: {
         Row: {
@@ -162,6 +191,14 @@ export interface Database {
           notes?: string | null
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "feed_coop_id_fkey"
+            columns: ["coop_id"]
+            referencedRelation: "coops"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       health_records: {
         Row: {
@@ -194,6 +231,14 @@ export interface Database {
           vet_name?: string | null
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "health_records_chicken_id_fkey"
+            columns: ["chicken_id"]
+            referencedRelation: "chickens"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       sales: {
         Row: {
@@ -226,6 +271,7 @@ export interface Database {
           status?: 'pending' | 'completed'
           created_at?: string
         }
+        Relationships: []
       }
     }
     Views: {}
